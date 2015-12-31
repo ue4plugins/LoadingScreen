@@ -53,7 +53,8 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 		int32 TipIndex = FMath::RandRange(0, Settings->Tips.Num() - 1);
 
 		TipWidget = SNew(STextBlock)
-			.WrapTextAt(500.0f)
+			.WrapTextAt(Settings->TipWrapAt)
+			.Font(Settings->TipFont)
 			.Text(Settings->Tips[TipIndex]);
 	}
 
@@ -76,23 +77,25 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 				.DPIScale(this, &SSimpleLoadingScreen::GetDPIScale)
 				[
 					SNew(SHorizontalBox)
-					+ SHorizontalBox::Slot()
-					.Padding(FMargin(25.0f, 0.0f, 0, 0))
-					.AutoWidth()
-					.VAlign(VAlign_Center)
-					[
-						SNew(STextBlock)
-						.Text(LOCTEXT("Loading", "LOADING"))
-					]
 
 					+ SHorizontalBox::Slot()
-					.Padding(FMargin(40, 0.0f, 0, 0))
+					.Padding(FMargin(25, 0.0f, 0, 0))
 					.VAlign(VAlign_Center)
 					.AutoWidth()
 					[
 						SNew(SThrobber)
-						.NumPieces(10)
+						.NumPieces(5)
 						.Animate(SThrobber::Horizontal)
+					]
+
+					+ SHorizontalBox::Slot()
+					.Padding(FMargin(40.0f, 0.0f, 0, 0))
+					.AutoWidth()
+					.VAlign(VAlign_Center)
+					[
+						SNew(STextBlock)
+						.Text(InScreenDescription.LoadingText)
+						.Font(InScreenDescription.LoadingFont)
 					]
 
 					+ SHorizontalBox::Slot()
