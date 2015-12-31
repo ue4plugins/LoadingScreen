@@ -40,7 +40,7 @@ source code from GitHub (4.9 or higher) is required for this.
 After compiling the plug-in, you have to **enable it** in Unreal Editor's
 plug-in browser.
 
-![plugin](Docs/plugin.png)
+![plugin](Docs/plugins.png)
 
 
 ## Support
