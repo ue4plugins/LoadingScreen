@@ -1,0 +1,22 @@
+{
+	"FileVersion" : 3,
+	"Version" : 1,
+	"VersionName" : "1.0",
+	"FriendlyName" : "Loading Screen",
+	"Description" : "A simple loading screen plug-in.",
+	"Category" : "Loading",
+	"CreatedBy" : "Nick Darnell",
+	"CreatedByURL": "http://nickdarnell.com",
+	"EngineVersion" : "4.10.0",
+	"EnabledByDefault" : false,
+	"CanContainContent": true,
+
+	"Modules" :
+	[
+		{
+			"Name" : "LoadingScreen",
+			"Type" : "Runtime",
+			"LoadingPhase" : "PreLoadingScreen"
+		}
+	]
+}
