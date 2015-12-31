@@ -5,6 +5,8 @@
 #include "SScaleBox.h"
 #include "SSafeZone.h"
 #include "SThrobber.h"
+#include "SDPIScaler.h"
+#include "Engine/UserInterfaceSettings.h"
 
 #include "SSimpleLoadingScreen.h"
 
@@ -15,6 +17,8 @@
 
 void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScreenDescription& InScreenDescription)
 {
+	LastComputedDPIScale = 1.0f;
+
 	const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
 
 	TSharedRef<SOverlay> Root = SNew(SOverlay);
@@ -68,39 +72,43 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 			.VAlign(VAlign_Bottom)
 			.IsTitleSafe(true)
 			[
-				SNew(SHorizontalBox)
-				+ SHorizontalBox::Slot()
-				.Padding(FMargin(25.0f, 0.0f, 0, 0))
-				.AutoWidth()
-				.VAlign(VAlign_Center)
+				SNew(SDPIScaler)
+				.DPIScale(this, &SSimpleLoadingScreen::GetDPIScale)
 				[
-					SNew(STextBlock)
-					.Text(LOCTEXT("Loading", "LOADING"))
-				]
+					SNew(SHorizontalBox)
+					+ SHorizontalBox::Slot()
+					.Padding(FMargin(25.0f, 0.0f, 0, 0))
+					.AutoWidth()
+					.VAlign(VAlign_Center)
+					[
+						SNew(STextBlock)
+						.Text(LOCTEXT("Loading", "LOADING"))
+					]
 
-				+ SHorizontalBox::Slot()
-				.Padding(FMargin(40, 0.0f, 0, 0))
-				.VAlign(VAlign_Center)
-				.AutoWidth()
-				[
-					SNew(SThrobber)
-					.NumPieces(10)
-					.Animate(SThrobber::Horizontal)
-				]
+					+ SHorizontalBox::Slot()
+					.Padding(FMargin(40, 0.0f, 0, 0))
+					.VAlign(VAlign_Center)
+					.AutoWidth()
+					[
+						SNew(SThrobber)
+						.NumPieces(10)
+						.Animate(SThrobber::Horizontal)
+					]
 
-				+ SHorizontalBox::Slot()
-				.FillWidth(1)
-				.HAlign(HAlign_Fill)
-				[
-					SNew(SSpacer)
-					.Size(FVector2D(1.0f, 1.0f))
-				]
+					+ SHorizontalBox::Slot()
+					.FillWidth(1)
+					.HAlign(HAlign_Fill)
+					[
+						SNew(SSpacer)
+						.Size(FVector2D(1.0f, 1.0f))
+					]
 
-				+ SHorizontalBox::Slot()
-				.AutoWidth()
-				.HAlign(HAlign_Right)
-				[
-					TipWidget
+					+ SHorizontalBox::Slot()
+					.AutoWidth()
+					.HAlign(HAlign_Right)
+					[
+						TipWidget
+					]
 				]
 			]
 		]
@@ -110,6 +118,24 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 	[
 		Root
 	];
+}
+
+void SSimpleLoadingScreen::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
+{
+	const FVector2D& LocalSize = AllottedGeometry.GetLocalSize();
+	FIntPoint Size((int32)LocalSize.X, (int32)LocalSize.Y);
+	const float NewScale = GetDefault<UUserInterfaceSettings>()->GetDPIScaleBasedOnSize(Size);
+
+	if ( NewScale != LastComputedDPIScale )
+	{
+		LastComputedDPIScale = NewScale;
+		SlatePrepass(1.0f);
+	}
+}
+
+float SSimpleLoadingScreen::GetDPIScale() const
+{
+	return LastComputedDPIScale;
 }
 
 #undef LOCTEXT_NAMESPACE
