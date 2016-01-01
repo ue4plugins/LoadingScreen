@@ -83,9 +83,9 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 					.VAlign(VAlign_Center)
 					.AutoWidth()
 					[
-						SNew(SThrobber)
-						.NumPieces(5)
-						.Animate(SThrobber::Horizontal)
+						SNew(SCircularThrobber)
+						// Convert font size to pixels, pixel_size = point_size * resolution / 72, then half it to get radius
+						.Radius((InScreenDescription.LoadingFont.Size * 96.0f/72.0f) / 2.0f)
 					]
 
 					+ SHorizontalBox::Slot()
@@ -109,6 +109,8 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 					+ SHorizontalBox::Slot()
 					.AutoWidth()
 					.HAlign(HAlign_Right)
+					.VAlign(VAlign_Center)
+					.Padding(FMargin(10.0f))
 					[
 						TipWidget
 					]

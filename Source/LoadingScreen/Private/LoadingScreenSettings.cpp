@@ -33,7 +33,7 @@ ULoadingScreenSettings::ULoadingScreenSettings(const FObjectInitializer& Initial
 	if ( !UE_SERVER )
 	{
 		static ConstructorHelpers::FObjectFinder<UFont> RobotoFontObj(TEXT("/Engine/EngineFonts/Roboto"));
-		TipFont = FSlateFontInfo(RobotoFontObj.Object, 24, FName("Normal"));
+		TipFont = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
 	}
 }
 
