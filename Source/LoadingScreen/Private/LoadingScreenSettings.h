@@ -29,6 +29,10 @@ struct LOADINGSCREEN_API FLoadingScreenDescription
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
 	bool bWaitForManualStop;
 
+	/**  Should we show the images/tips/loading text?  Generally you'll want to set this to false if you just want to show a movie. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Display)
+	bool bShowUIOverlay;
+
 	/**  */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Display)
 	FText LoadingText;

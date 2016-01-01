@@ -1,6 +1,7 @@
 # LoadingScreen
 
-Unreal Engine 4 plug-in that adds a simple layer on top of the loading screen system.
+Unreal Engine 4 plug-in that adds a simplified layer on top of the loading screen system
+to make it easier to add a loading screen.
 
 ![Screenshot](Docs/screenshot.png)
 

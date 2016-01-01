@@ -23,6 +23,7 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 
 	TSharedRef<SOverlay> Root = SNew(SOverlay);
 
+	// If there's an image defined
 	if ( InScreenDescription.Images.Num() > 0 )
 	{
 		int32 ImageIndex = FMath::RandRange(0, InScreenDescription.Images.Num() - 1);

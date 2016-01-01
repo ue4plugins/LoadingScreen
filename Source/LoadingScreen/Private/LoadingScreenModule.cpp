@@ -85,7 +85,11 @@ void FLoadingScreenModule::BeginLoadingScreen(const FLoadingScreenDescription& S
 	if ( ScreenDescription.IsValid() )
 	{
 		LoadingScreen.MoviePaths = ScreenDescription.MoviePaths;
-		LoadingScreen.WidgetLoadingScreen = SNew(SSimpleLoadingScreen, ScreenDescription);
+
+		if ( ScreenDescription.bShowUIOverlay )
+		{
+			LoadingScreen.WidgetLoadingScreen = SNew(SSimpleLoadingScreen, ScreenDescription);
+		}
 	}
 	else
 	{

@@ -10,8 +10,9 @@ FLoadingScreenDescription::FLoadingScreenDescription()
 	, bAutoCompleteWhenLoadingCompletes(true)
 	, bMoviesAreSkippable(true)
 	, bWaitForManualStop(false)
-	, ImageStretch(EStretch::ScaleToFit)
+	, bShowUIOverlay(true)
 	, LoadingText(LOCTEXT("Loading", "LOADING"))
+	, ImageStretch(EStretch::ScaleToFit)
 {
 	if ( !UE_SERVER )
 	{
