@@ -52,9 +52,6 @@ struct LOADINGSCREEN_API FLoadingScreenDescription
 	/** The scaling type to apply to images. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Images)
 	TEnumAsByte<EStretch::Type> ImageStretch;
-
-	/** Have they defined a texture or a movie? */
-	bool IsValid() const;
 };
 
 /**

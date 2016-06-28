@@ -13,6 +13,8 @@
 class FLoadingScreenModule : public ILoadingScreenModule
 {
 public:
+	FLoadingScreenModule();
+
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
@@ -22,54 +24,56 @@ public:
 	}
 
 private:
-	void HandlePreLoadMap();
-	void HandlePostLoadMap();
+	void HandlePrepareLoadingScreen();
 
 	void BeginLoadingScreen(const FLoadingScreenDescription& ScreenDescription);
-	void EndLoadingScreen();
 };
 
 IMPLEMENT_MODULE(FLoadingScreenModule, LoadingScreen)
 
+FLoadingScreenModule::FLoadingScreenModule()
+{
+
+}
+
 void FLoadingScreenModule::StartupModule()
 {
-	// Load for cooker reference
-	const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
-	for ( const FStringAssetReference& Ref : Settings->StartupScreen.Images )
+	if ( !IsRunningDedicatedServer() )
 	{
-		Ref.TryLoad();
-	}
-	for ( const FStringAssetReference& Ref : Settings->DefaultScreen.Images )
-	{
-		Ref.TryLoad();
-	}
+		// Load for cooker reference
+		const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
+		for ( const FStringAssetReference& Ref : Settings->StartupScreen.Images )
+		{
+			Ref.TryLoad();
+		}
+		for ( const FStringAssetReference& Ref : Settings->DefaultScreen.Images )
+		{
+			Ref.TryLoad();
+		}
 
-	FCoreUObjectDelegates::PreLoadMap.AddRaw(this, &FLoadingScreenModule::HandlePreLoadMap);
-	FCoreUObjectDelegates::PostLoadMap.AddRaw(this, &FLoadingScreenModule::HandlePostLoadMap);
+		if ( IsMoviePlayerEnabled() )
+		{
+			GetMoviePlayer()->OnPrepareLoadingScreen().AddRaw(this, &FLoadingScreenModule::HandlePrepareLoadingScreen);
+		}
 
-	if ( IsMoviePlayerEnabled() )
-	{
+		// Prepare the startup screen, the PrepareLoadingScreen callback won't be called
+		// if we've already explictly setup the loading screen.
 		BeginLoadingScreen(Settings->StartupScreen);
 	}
 }
 
 void FLoadingScreenModule::ShutdownModule()
 {
-	FCoreUObjectDelegates::PreLoadMap.RemoveAll(this);
-	FCoreUObjectDelegates::PostLoadMap.RemoveAll(this);
-}
-
-void FLoadingScreenModule::HandlePreLoadMap()
-{
-	//if ( GEngine && GEngine->IsInitialized() )
+	if ( !IsRunningDedicatedServer() )
 	{
-		const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
-		BeginLoadingScreen(Settings->DefaultScreen);
+		GetMoviePlayer()->OnPrepareLoadingScreen().RemoveAll(this);
 	}
 }
 
-void FLoadingScreenModule::HandlePostLoadMap()
+void FLoadingScreenModule::HandlePrepareLoadingScreen()
 {
+	const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
+	BeginLoadingScreen(Settings->DefaultScreen);
 }
 
 void FLoadingScreenModule::BeginLoadingScreen(const FLoadingScreenDescription& ScreenDescription)
@@ -79,29 +83,15 @@ void FLoadingScreenModule::BeginLoadingScreen(const FLoadingScreenDescription& S
 	LoadingScreen.bAutoCompleteWhenLoadingCompletes = ScreenDescription.bAutoCompleteWhenLoadingCompletes;
 	LoadingScreen.bMoviesAreSkippable = ScreenDescription.bMoviesAreSkippable;
 	LoadingScreen.bWaitForManualStop = ScreenDescription.bWaitForManualStop;
+	LoadingScreen.MoviePaths = ScreenDescription.MoviePaths;
 
-	//TODO if overridden...
-
-	if ( ScreenDescription.IsValid() )
+	if ( ScreenDescription.bShowUIOverlay )
 	{
-		LoadingScreen.MoviePaths = ScreenDescription.MoviePaths;
+		LoadingScreen.WidgetLoadingScreen = SNew(SSimpleLoadingScreen, ScreenDescription);
+	}
 
-		if ( ScreenDescription.bShowUIOverlay )
-		{
-			LoadingScreen.WidgetLoadingScreen = SNew(SSimpleLoadingScreen, ScreenDescription);
-		}
-	}
-	else
-	{
-		LoadingScreen.WidgetLoadingScreen = FLoadingScreenAttributes::NewTestLoadingScreenWidget();
-	}
-	
 	GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
 }
 
-void FLoadingScreenModule::EndLoadingScreen()
-{
-
-}
 
 #undef LOCTEXT_NAMESPACE

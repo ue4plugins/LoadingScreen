@@ -21,6 +21,9 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 
 	const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
 
+	//Settings->TipFont;
+	//InScreenDescription.LoadingFont.GetCompositeFont()->SubTypefaces[0]->Typeface.Fonts[0].Font.BulkDataPtr->GetLinker()->GetOwnerThreadId()
+
 	TSharedRef<SOverlay> Root = SNew(SOverlay);
 
 	// If there's an image defined
@@ -55,7 +58,7 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 
 		TipWidget = SNew(STextBlock)
 			.WrapTextAt(Settings->TipWrapAt)
-			.Font(Settings->TipFont)
+			//.Font(Settings->TipFont)
 			.Text(Settings->Tips[TipIndex]);
 	}
 
@@ -96,7 +99,7 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 					[
 						SNew(STextBlock)
 						.Text(InScreenDescription.LoadingText)
-						.Font(InScreenDescription.LoadingFont)
+						//.Font(InScreenDescription.LoadingFont)
 					]
 
 					+ SHorizontalBox::Slot()
