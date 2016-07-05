@@ -6,7 +6,7 @@
 	"Description" : "A simple loading screen plug-in.",
 	"Category" : "Loading",
 	"CreatedBy" : "Nick Darnell",
-	"CreatedByURL": "http://nickdarnell.com",
+	"CreatedByURL": "https://twitter.com/NickDarnell",
 	"EngineVersion" : "4.12.0",
 	"EnabledByDefault" : false,
 	"CanContainContent": true,
