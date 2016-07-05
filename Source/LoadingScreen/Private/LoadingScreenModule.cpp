@@ -38,7 +38,7 @@ FLoadingScreenModule::FLoadingScreenModule()
 
 void FLoadingScreenModule::StartupModule()
 {
-	if ( !IsRunningDedicatedServer() )
+	if ( !IsRunningDedicatedServer() && FSlateApplication::IsInitialized() )
 	{
 		// Load for cooker reference
 		const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
