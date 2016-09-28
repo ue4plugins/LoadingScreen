@@ -4,7 +4,6 @@
 #include "ILoadingScreenModule.h"
 
 #include "LoadingScreenSettings.h"
-#include "MoviePlayer.h"
 
 #include "SSimpleLoadingScreen.h"
 
@@ -84,7 +83,8 @@ void FLoadingScreenModule::BeginLoadingScreen(const FLoadingScreenDescription& S
 	LoadingScreen.bMoviesAreSkippable = ScreenDescription.bMoviesAreSkippable;
 	LoadingScreen.bWaitForManualStop = ScreenDescription.bWaitForManualStop;
 	LoadingScreen.MoviePaths = ScreenDescription.MoviePaths;
-
+	LoadingScreen.PlaybackType = ScreenDescription.PlaybackType;
+	
 	if ( ScreenDescription.bShowUIOverlay )
 	{
 		LoadingScreen.WidgetLoadingScreen = SNew(SSimpleLoadingScreen, ScreenDescription);
