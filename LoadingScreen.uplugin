@@ -9,7 +9,7 @@
 	"CreatedByURL": "http://nickdarnell.com",
 	"EngineVersion" : "4.12.0",
 	"EnabledByDefault" : false,
-	"CanContainContent": true,
+	"CanContainContent": false,
 
 	"Modules" :
 	[
