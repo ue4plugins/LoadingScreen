@@ -15,8 +15,7 @@ time to avoid needing to write a new loading screen manually.
 
 ## Supported Platforms
 
-This plug-in was last built against **Unreal Engine 4.12**. It works on all
-platforms (probably).
+This plug-in was last built against **Unreal Engine 4.16**. It works on all platforms (probably).
 
 
 ## Dependencies
@@ -45,6 +44,8 @@ plug-in browser.
 
 
 ## Support
+
+**Note: This plugin is not supported by Epic Games.**
 
 Please [file an issue](https://github.com/nickdarnell/LoadingScreen/issues),
 submit a [pull request](https://github.com/nickdarnell/LoadingScreen/pulls?q=is%3Aopen+is%3Apr)

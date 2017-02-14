@@ -1,14 +1,12 @@
-// Copyright 1998-2015 Epic Games, Inc. All Rights Reserved.
+// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
-#include "LoadingScreenPrivatePCH.h"
+#include "SSimpleLoadingScreen.h"
 
 #include "SScaleBox.h"
 #include "SSafeZone.h"
 #include "SThrobber.h"
 #include "SDPIScaler.h"
 #include "Engine/UserInterfaceSettings.h"
-
-#include "SSimpleLoadingScreen.h"
 
 #define LOCTEXT_NAMESPACE "LoadingScreen"
 
