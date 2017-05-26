@@ -1,5 +1,6 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
+#include "LoadingScreenPrivatePCH.h"
 #include "SSimpleLoadingScreen.h"
 
 #include "SScaleBox.h"
