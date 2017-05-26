@@ -1,5 +1,6 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
+#include "LoadingScreenPrivatePCH.h"
 #include "LoadingScreenSettings.h"
 
 #define LOCTEXT_NAMESPACE "LoadingScreen"
