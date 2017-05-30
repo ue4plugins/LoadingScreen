@@ -7,7 +7,9 @@ namespace UnrealBuildTool.Rules
 		public LoadingScreen(ReadOnlyTargetRules Target)
             : base(Target)
         {
-			PrivateIncludePaths.Add("LoadingScreen/Private");
+            PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+
+            PrivateIncludePaths.Add("LoadingScreen/Private");
 
 			PublicDependencyModuleNames.AddRange(
 				new string[]

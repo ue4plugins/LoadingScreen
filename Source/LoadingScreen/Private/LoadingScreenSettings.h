@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "CoreMinimal.h"
+#include "Fonts/SlateFontInfo.h"
 #include "SScaleBox.h"
 
 #include "LoadingScreenSettings.generated.h"
