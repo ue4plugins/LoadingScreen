@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Fonts/SlateFontInfo.h"
 #include "SScaleBox.h"
+#include "MoviePlayer.h"
 
 #include "LoadingScreenSettings.generated.h"
 
@@ -30,6 +31,10 @@ struct LOADINGSCREEN_API FLoadingScreenDescription
 	/** If true, movie playback continues until Stop is called. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
 	bool bWaitForManualStop;
+	
+	/** Should we just play back, loop, etc.  NOTE: if the playback type is MT_LoopLast, then bAutoCompleteWhenLoadingCompletes will be togged on when the last movie is hit*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
+	TEnumAsByte<EMoviePlaybackType> PlaybackType;
 
 	/**  Should we show the images/tips/loading text?  Generally you'll want to set this to false if you just want to show a movie. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Display)
