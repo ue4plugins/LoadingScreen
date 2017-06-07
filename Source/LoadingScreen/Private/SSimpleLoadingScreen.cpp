@@ -7,6 +7,8 @@
 #include "Widgets/Layout/SSpacer.h"
 #include "Widgets/SOverlay.h"
 #include "Widgets/SBoxPanel.h"
+#include "Widgets/Text/STextBlock.h"
+#include "Widgets/Layout/SBorder.h"
 #include "SSafeZone.h"
 #include "SThrobber.h"
 #include "SDPIScaler.h"
