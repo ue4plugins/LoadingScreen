@@ -6,6 +6,7 @@
 #include "Fonts/SlateFontInfo.h"
 #include "SScaleBox.h"
 #include "MoviePlayer.h"
+#include "Engine/DeveloperSettings.h"
 
 #include "LoadingScreenSettings.generated.h"
 
