@@ -4,9 +4,12 @@ namespace UnrealBuildTool.Rules
 {
 	public class LoadingScreen : ModuleRules
 	{
-		public LoadingScreen(TargetInfo Target)
-		{
-			PrivateIncludePaths.Add("LoadingScreen/Private");
+		public LoadingScreen(ReadOnlyTargetRules Target)
+            : base(Target)
+        {
+            PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+
+            PrivateIncludePaths.Add("LoadingScreen/Private");
 
 			PublicDependencyModuleNames.AddRange(
 				new string[]
