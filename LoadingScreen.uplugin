@@ -1,22 +1,24 @@
 {
-	"FileVersion" : 3,
-	"Version" : 1,
-	"VersionName" : "1.0",
-	"FriendlyName" : "Loading Screen",
-	"Description" : "A simple loading screen plug-in.",
-	"Category" : "Loading",
-	"CreatedBy" : "Nick Darnell",
-	"CreatedByURL": "http://nickdarnell.com",
-	"EngineVersion" : "4.12.0",
-	"EnabledByDefault" : false,
-	"CanContainContent": false,
+  "FileVersion": 3,
 
-	"Modules" :
-	[
-		{
-			"Name" : "LoadingScreen",
-			"Type" : "Runtime",
-			"LoadingPhase" : "PreLoadingScreen"
-		}
-	]
+  "Version": 1,
+  "VersionName": "1.0",
+  "FriendlyName": "Loading Screen",
+  "Description": "A simple loading screen plug-in.",
+  "Category": "Loading",
+  "CreatedBy": "Epic Games, Inc.",
+  "CreatedByURL": "https://www.epicgames.com",
+  "DocsURL": "https://github.com/ue4plugins/LoadingScreen",
+  "SupportURL": "https://github.com/ue4plugins/LoadingScreen/issues",
+  "EngineVersion": "4.16.0",
+  "EnabledByDefault": false,
+  "CanContainContent": true,
+
+  "Modules": [
+    {
+      "Name": "LoadingScreen",
+      "Type": "Runtime",
+      "LoadingPhase": "PreLoadingScreen"
+    }
+  ]
 }

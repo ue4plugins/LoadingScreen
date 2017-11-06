@@ -1,9 +1,12 @@
-// Copyright 1998-2015 Epic Games, Inc. All Rights Reserved.
+// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
+#include "CoreMinimal.h"
+#include "Fonts/SlateFontInfo.h"
 #include "SScaleBox.h"
 #include "MoviePlayer.h"
+#include "Engine/DeveloperSettings.h"
 
 #include "LoadingScreenSettings.generated.h"
 
