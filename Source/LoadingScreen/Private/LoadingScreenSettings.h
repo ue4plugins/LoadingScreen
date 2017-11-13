@@ -33,7 +33,7 @@ struct LOADINGSCREEN_API FLoadingScreenDescription
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
 	bool bWaitForManualStop;
 	
-	/** Should we just play back, loop, etc.  NOTE: if the playback type is MT_LoopLast, then bAutoCompleteWhenLoadingCompletes will be togged on when the last movie is hit*/
+	/** Should we just play back, loop, etc.  NOTE: if playback type is MT_LoadingLoop, then MoviePlayer will auto complete when in the last movie and load finishes regardless of bAutoCompleteWhenLoadingCompletes */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
 	TEnumAsByte<EMoviePlaybackType> PlaybackType;
 
