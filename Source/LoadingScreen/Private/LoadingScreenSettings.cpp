@@ -15,11 +15,6 @@ FLoadingScreenDescription::FLoadingScreenDescription()
 	, LoadingText(LOCTEXT("Loading", "LOADING"))
 	, ImageStretch(EStretch::ScaleToFit)
 {
-	if ( !IsRunningDedicatedServer() )
-	{
-		static ConstructorHelpers::FObjectFinder<UFont> RobotoFontObj(TEXT("/Engine/EngineFonts/Roboto"));
-		LoadingFont = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));
-	}
 }
 
 ULoadingScreenSettings::ULoadingScreenSettings(const FObjectInitializer& Initializer)
@@ -31,6 +26,7 @@ ULoadingScreenSettings::ULoadingScreenSettings(const FObjectInitializer& Initial
 	{
 		static ConstructorHelpers::FObjectFinder<UFont> RobotoFontObj(TEXT("/Engine/EngineFonts/Roboto"));
 		TipFont = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
+		LoadingFont = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));
 	}
 }
 

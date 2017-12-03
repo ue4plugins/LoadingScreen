@@ -45,10 +45,6 @@ struct LOADINGSCREEN_API FLoadingScreenDescription
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Display)
 	FText LoadingText;
 
-	/**  */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Display)
-	FSlateFontInfo LoadingFont;
-
 	/** The movie paths local to the game's Content/Movies/ directory we will play. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Movies)
 	TArray<FString> MoviePaths;
@@ -83,6 +79,10 @@ public:
 	/** The font to display the tips in. */
 	UPROPERTY(config, EditAnywhere, BlueprintReadWrite, Category=Advice)
 	FSlateFontInfo TipFont;
+
+	/** The font to display on loading. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Display)
+	FSlateFontInfo LoadingFont;
 
 	/** The size of the tip before it's wrapped to the next line. */
 	UPROPERTY(config, EditAnywhere, BlueprintReadWrite, Category=Advice)

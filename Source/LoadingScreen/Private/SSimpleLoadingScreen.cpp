@@ -26,8 +26,8 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 
 	const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
 
-	//Settings->TipFont;
-	//InScreenDescription.LoadingFont.GetCompositeFont()->SubTypefaces[0]->Typeface.Fonts[0].Font.BulkDataPtr->GetLinker()->GetOwnerThreadId()
+	const FSlateFontInfo& TipFont = Settings->TipFont;
+	const FSlateFontInfo& LoadingFont = Settings->LoadingFont;
 
 	TSharedRef<SOverlay> Root = SNew(SOverlay);
 
@@ -63,7 +63,7 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 
 		TipWidget = SNew(STextBlock)
 			.WrapTextAt(Settings->TipWrapAt)
-			//.Font(Settings->TipFont)
+			.Font(TipFont)
 			.Text(Settings->Tips[TipIndex]);
 	}
 
@@ -94,7 +94,7 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 					[
 						SNew(SCircularThrobber)
 						// Convert font size to pixels, pixel_size = point_size * resolution / 72, then half it to get radius
-						.Radius((InScreenDescription.LoadingFont.Size * 96.0f/72.0f) / 2.0f)
+						.Radius((LoadingFont.Size * 96.0f/72.0f) / 2.0f)
 					]
 
 					+ SHorizontalBox::Slot()
@@ -104,7 +104,7 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 					[
 						SNew(STextBlock)
 						.Text(InScreenDescription.LoadingText)
-						//.Font(InScreenDescription.LoadingFont)
+						.Font(LoadingFont)
 					]
 
 					+ SHorizontalBox::Slot()
