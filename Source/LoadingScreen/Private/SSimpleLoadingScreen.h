@@ -17,9 +17,10 @@ struct FLoadingScreenBrush : public FSlateDynamicImageBrush, public FGCObject
 
 	virtual void AddReferencedObjects(FReferenceCollector& Collector) override
 	{
-		if ( ResourceObject )
+		UObject* Object = GetResourceObject();
+		if (Object)
 		{
-			Collector.AddReferencedObject(ResourceObject);
+			Collector.AddReferencedObject(Object);
 		}
 	}
 };

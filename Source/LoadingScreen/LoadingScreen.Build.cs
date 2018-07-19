@@ -21,8 +21,7 @@ namespace UnrealBuildTool.Rules
 					"SlateCore",
 					"InputCore",
 					"Engine"
-				}
-				);
+				});
 		}
 	}
 }
