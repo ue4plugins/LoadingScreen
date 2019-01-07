@@ -20,38 +20,34 @@ struct LOADINGSCREEN_API FLoadingScreenDescription
 	/** The minimum time that a loading screen should be opened for, -1 if there is no minimum time. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
 	float MinimumLoadingScreenDisplayTime;
-
-	/** If true, the loading screen will disappear as soon as all movies are played and loading is done. */
+	
+	/** If true, the loading screen will disappear as soon as loading is done. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
 	bool bAutoCompleteWhenLoadingCompletes;
-
+	
 	/** If true, movies can be skipped by clicking the loading screen as long as loading is done. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
 	bool bMoviesAreSkippable;
-
+	
 	/** If true, movie playback continues until Stop is called. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
 	bool bWaitForManualStop;
 	
-	/** Should we just play back, loop, etc.  NOTE: if the playback type is MT_LoopLast, then bAutoCompleteWhenLoadingCompletes will be togged on when the last movie is hit*/
+	/** Should we just play back, loop, etc.  NOTE: if playback type is MT_LoadingLoop, then MoviePlayer will auto complete when in the last movie and load finishes regardless of bAutoCompleteWhenLoadingCompletes */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
 	TEnumAsByte<EMoviePlaybackType> PlaybackType;
+
+	/** The movie paths local to the game's Content/Movies/ directory without extension. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Movies)
+	TArray<FString> MoviePaths;
 
 	/**  Should we show the images/tips/loading text?  Generally you'll want to set this to false if you just want to show a movie. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Display)
 	bool bShowUIOverlay;
 
-	/**  */
+	/**  Text displayed beside the animated icon */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Display)
 	FText LoadingText;
-
-	/**  */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Display)
-	FSlateFontInfo LoadingFont;
-
-	/** The movie paths local to the game's Content/Movies/ directory we will play. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Movies)
-	TArray<FString> MoviePaths;
 
 	/** The texture display while in the loading screen on top of the movie. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Images, meta=(AllowedClasses="Texture2D"))
@@ -83,6 +79,10 @@ public:
 	/** The font to display the tips in. */
 	UPROPERTY(config, EditAnywhere, BlueprintReadWrite, Category=Advice)
 	FSlateFontInfo TipFont;
+
+	/** The font to display on loading. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Display)
+	FSlateFontInfo LoadingFont;
 
 	/** The size of the tip before it's wrapped to the next line. */
 	UPROPERTY(config, EditAnywhere, BlueprintReadWrite, Category=Advice)
