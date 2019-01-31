@@ -81,7 +81,7 @@ public:
 	FSlateFontInfo TipFont;
 
 	/** The font to display on loading. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Display)
+	UPROPERTY(config, EditAnywhere, BlueprintReadWrite, Category = Display)
 	FSlateFontInfo LoadingFont;
 
 	/** The size of the tip before it's wrapped to the next line. */
