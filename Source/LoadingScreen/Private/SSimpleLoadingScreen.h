@@ -5,25 +5,7 @@
 #include "SCompoundWidget.h"
 #include "LoadingScreenSettings.h"
 
-/**
-* Special brush to prevent garbage collection
-*/
-struct FLoadingScreenBrush : public FSlateDynamicImageBrush, public FGCObject
-{
-	FLoadingScreenBrush(class UTexture2D* InTexture, const FVector2D& InImageSize, const FName InImagePath)
-		: FSlateDynamicImageBrush(InTexture, InImageSize, InImagePath)
-	{
-	}
-
-	virtual void AddReferencedObjects(FReferenceCollector& Collector) override
-	{
-		UObject* Object = GetResourceObject();
-		if (Object)
-		{
-			Collector.AddReferencedObject(Object);
-		}
-	}
-};
+class FDeferredCleanupSlateBrush;
 
 class SSimpleLoadingScreen : public SCompoundWidget
 {
@@ -41,6 +23,6 @@ private:
 	float GetDPIScale() const;
 	
 private:
-	TSharedPtr<FLoadingScreenBrush> LoadingScreenBrush;
+	TSharedPtr<FDeferredCleanupSlateBrush> LoadingScreenBrush;
 	float LastComputedDPIScale;
 };

@@ -1,24 +1,35 @@
-// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
 #include "SSimpleLoadingScreen.h"
 
-#include "SScaleBox.h"
-#include "Widgets/Images/SImage.h"
-#include "Widgets/Layout/SSpacer.h"
 #include "Widgets/SOverlay.h"
 #include "Widgets/SBoxPanel.h"
-#include "Widgets/Text/STextBlock.h"
+#include "Widgets/Layout/SScaleBox.h"
+#include "Widgets/Layout/SSpacer.h"
 #include "Widgets/Layout/SBorder.h"
-#include "SSafeZone.h"
-#include "SThrobber.h"
-#include "SDPIScaler.h"
+#include "Widgets/Layout/SSafeZone.h"
+#include "Widgets/Layout/SDPIScaler.h"
+#include "Widgets/Text/STextBlock.h"
+#include "Widgets/Images/SImage.h"
+#include "Widgets/Images/SThrobber.h"
 #include "Engine/Texture2D.h"
 #include "Engine/UserInterfaceSettings.h"
+#include "Slate/DeferredCleanupSlateBrush.h"
 
 #define LOCTEXT_NAMESPACE "LoadingScreen"
 
 /////////////////////////////////////////////////////
 // SSimpleLoadingScreen
+
+static float PointSizeToSlateUnits(float PointSize)
+{
+	//FreeTypeConstants::HorizontalDPI = 96;
+	const float SlateFreeTypeHorizontalResolutionDPI = 96.0f;
+	const float FreeTypeNativeDPI = 72.0f;
+	const float PixelSize = PointSize * (SlateFreeTypeHorizontalResolutionDPI / FreeTypeNativeDPI);
+
+	return PixelSize;
+}
 
 void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScreenDescription& InScreenDescription)
 {
@@ -39,18 +50,24 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 		UObject* ImageObject = ImageAsset.TryLoad();
 		if ( UTexture2D* LoadingImage = Cast<UTexture2D>(ImageObject) )
 		{
-			FVector2D Size = FVector2D(LoadingImage->GetSizeX(), LoadingImage->GetSizeY());
-			LoadingScreenBrush = MakeShareable(new FLoadingScreenBrush(LoadingImage, Size, FName(*ImageAsset.ToString())));
+			LoadingScreenBrush = FDeferredCleanupSlateBrush::CreateBrush(LoadingImage);
 
 			Root->AddSlot()
 			.HAlign(HAlign_Fill)
 			.VAlign(VAlign_Fill)
 			[
-				SNew(SScaleBox)
-				.Stretch(InScreenDescription.ImageStretch)
+				SNew(SBorder)
+				.HAlign(HAlign_Fill)
+				.VAlign(VAlign_Fill)
+				.BorderBackgroundColor(InScreenDescription.BackgroundColor)
+				.BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))
 				[
-					SNew(SImage)
-					.Image(LoadingScreenBrush.Get())
+					SNew(SScaleBox)
+					.Stretch(InScreenDescription.ImageStretch)
+					[
+						SNew(SImage)
+						.Image(LoadingScreenBrush.IsValid() ? LoadingScreenBrush->GetSlateBrush() : nullptr)
+					]
 				]
 			];
 		}
@@ -66,6 +83,12 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 			.Font(TipFont)
 			.Text(Settings->Tips[TipIndex]);
 	}
+	else
+	{
+		// Need to use a spacer when being rendered on another thread, incrementing the SNullWidget will
+		// lead to shared ptr crashes.
+		TipWidget = SNew(SSpacer);
+	}
 
 	Root->AddSlot()
 	.HAlign(HAlign_Fill)
@@ -74,7 +97,7 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 		SNew(SBorder)
 		.HAlign(HAlign_Fill)
 		.VAlign(VAlign_Fill)
-		.BorderBackgroundColor(FLinearColor(0, 0, 0, 0.75))
+		.BorderBackgroundColor(InScreenDescription.TipBackgroundColor)
 		.BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))
 		[
 			SNew(SSafeZone)
@@ -93,8 +116,7 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 					.AutoWidth()
 					[
 						SNew(SCircularThrobber)
-						// Convert font size to pixels, pixel_size = point_size * resolution / 72, then half it to get radius
-						.Radius((LoadingFont.Size * 96.0f/72.0f) / 2.0f)
+						.Radius(PointSizeToSlateUnits(LoadingFont.Size) / 2.0f)
 					]
 
 					+ SHorizontalBox::Slot()

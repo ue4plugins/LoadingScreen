@@ -15,7 +15,7 @@ time to avoid needing to write a new loading screen manually.
 
 ## Supported Platforms
 
-This plug-in was last built against **Unreal Engine 4.16**. It works on all platforms (probably).
+This plug-in was last built against **Unreal Engine 4.22**. It works on all platforms (probably).
 
 
 ## Dependencies
@@ -33,15 +33,7 @@ If you use it as a project plug-in, clone this repository into your project's
 */Plugins* directory and compile your game in Visual Studio. A C++ code project
 is required for this to work.
 
-If you use it as an Engine plug-in, clone this repository into the
-*/Engine/Plugins/Media* directory and compile your game. Full Unreal Engine 4
-source code from GitHub (4.12 or higher) is required for this.
-
-After compiling the plug-in, you have to **enable it** in Unreal Editor's
-plug-in browser.
-
-![plugin](Docs/plugins.png)
-
+The plug-in configured to be enabled by default once it's in your game's plug-in directory.
 
 ## Support
 

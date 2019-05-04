@@ -1,4 +1,4 @@
-// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
 #include "ILoadingScreenModule.h"
 #include "LoadingScreenSettings.h"
@@ -43,6 +43,7 @@ void FLoadingScreenModule::StartupModule()
 		{
 			Ref.TryLoad();
 		}
+
 		for ( const FStringAssetReference& Ref : Settings->DefaultScreen.Images )
 		{
 			Ref.TryLoad();

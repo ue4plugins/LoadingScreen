@@ -1,4 +1,4 @@
-// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -18,21 +18,21 @@ struct LOADINGSCREEN_API FLoadingScreenDescription
 	FLoadingScreenDescription();
 
 	/** The minimum time that a loading screen should be opened for, -1 if there is no minimum time. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
-	float MinimumLoadingScreenDisplayTime;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Loading)
+	float MinimumLoadingScreenDisplayTime = -1;
 	
 	/** If true, the loading screen will disappear as soon as loading is done. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
-	bool bAutoCompleteWhenLoadingCompletes;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Loading)
+	bool bAutoCompleteWhenLoadingCompletes = true;
 	
 	/** If true, movies can be skipped by clicking the loading screen as long as loading is done. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
-	bool bMoviesAreSkippable;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Loading)
+	bool bMoviesAreSkippable = true;
 	
 	/** If true, movie playback continues until Stop is called. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
-	bool bWaitForManualStop;
-	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Loading)
+	bool bWaitForManualStop = false;
+
 	/** Should we just play back, loop, etc.  NOTE: if playback type is MT_LoadingLoop, then MoviePlayer will auto complete when in the last movie and load finishes regardless of bAutoCompleteWhenLoadingCompletes */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Loading)
 	TEnumAsByte<EMoviePlaybackType> PlaybackType;
@@ -42,8 +42,8 @@ struct LOADINGSCREEN_API FLoadingScreenDescription
 	TArray<FString> MoviePaths;
 
 	/**  Should we show the images/tips/loading text?  Generally you'll want to set this to false if you just want to show a movie. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Display)
-	bool bShowUIOverlay;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Display)
+	bool bShowUIOverlay = true;
 
 	/**  Text displayed beside the animated icon */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Display)
@@ -51,11 +51,19 @@ struct LOADINGSCREEN_API FLoadingScreenDescription
 
 	/** The texture display while in the loading screen on top of the movie. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Images, meta=(AllowedClasses="Texture2D"))
-	TArray<FStringAssetReference> Images;
+	TArray<FSoftObjectPath> Images;
 
 	/** The scaling type to apply to images. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Images)
-	TEnumAsByte<EStretch::Type> ImageStretch;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Images)
+	TEnumAsByte<EStretch::Type> ImageStretch = EStretch::ScaleToFit;
+
+	/** The background color to use */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Images)
+	FLinearColor BackgroundColor = FLinearColor::Black;
+
+	/** The background color to use for tips */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Images)
+	FLinearColor TipBackgroundColor = FLinearColor(0, 0, 0, 0.75f);
 };
 
 /**

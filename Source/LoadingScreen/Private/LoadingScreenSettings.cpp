@@ -1,4 +1,4 @@
-// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
 #include "LoadingScreenSettings.h"
 #include "UObject/ConstructorHelpers.h"
@@ -7,13 +7,7 @@
 #define LOCTEXT_NAMESPACE "LoadingScreen"
 
 FLoadingScreenDescription::FLoadingScreenDescription()
-	: MinimumLoadingScreenDisplayTime(-1)
-	, bAutoCompleteWhenLoadingCompletes(true)
-	, bMoviesAreSkippable(true)
-	, bWaitForManualStop(false)
-	, bShowUIOverlay(true)
-	, LoadingText(LOCTEXT("Loading", "LOADING"))
-	, ImageStretch(EStretch::ScaleToFit)
+	: LoadingText(LOCTEXT("Loading", "LOADING"))
 {
 }
 
