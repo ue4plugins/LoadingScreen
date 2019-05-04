@@ -33,8 +33,6 @@ static float PointSizeToSlateUnits(float PointSize)
 
 void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScreenDescription& InScreenDescription)
 {
-	LastComputedDPIScale = 1.0f;
-
 	const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
 
 	const FSlateFontInfo& TipFont = Settings->TipFont;
@@ -45,7 +43,7 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 	// If there's an image defined
 	if ( InScreenDescription.Images.Num() > 0 )
 	{
-		int32 ImageIndex = FMath::RandRange(0, InScreenDescription.Images.Num() - 1);
+		const int32 ImageIndex = FMath::RandRange(0, InScreenDescription.Images.Num() - 1);
 		const FStringAssetReference& ImageAsset = InScreenDescription.Images[ImageIndex];
 		UObject* ImageObject = ImageAsset.TryLoad();
 		if ( UTexture2D* LoadingImage = Cast<UTexture2D>(ImageObject) )
@@ -76,7 +74,7 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 	TSharedRef<SWidget> TipWidget = SNullWidget::NullWidget;
 	if ( Settings->Tips.Num() > 0 )
 	{
-		int32 TipIndex = FMath::RandRange(0, Settings->Tips.Num() - 1);
+		const int32 TipIndex = FMath::RandRange(0, Settings->Tips.Num() - 1);
 
 		TipWidget = SNew(STextBlock)
 			.WrapTextAt(Settings->TipWrapAt)
@@ -156,22 +154,11 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 	];
 }
 
-void SSimpleLoadingScreen::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
-{
-	const FVector2D& LocalSize = AllottedGeometry.GetLocalSize();
-	FIntPoint Size((int32)LocalSize.X, (int32)LocalSize.Y);
-	const float NewScale = GetDefault<UUserInterfaceSettings>()->GetDPIScaleBasedOnSize(Size);
-
-	if ( NewScale != LastComputedDPIScale )
-	{
-		LastComputedDPIScale = NewScale;
-		SlatePrepass(1.0f);
-	}
-}
-
 float SSimpleLoadingScreen::GetDPIScale() const
 {
-	return LastComputedDPIScale;
+	const FVector2D& DrawSize = GetCachedGeometry().ToPaintGeometry().GetLocalSize();
+	const FIntPoint Size((int32)DrawSize.X, (int32)DrawSize.Y);
+	return GetDefault<UUserInterfaceSettings>()->GetDPIScaleBasedOnSize(Size);
 }
 
 #undef LOCTEXT_NAMESPACE

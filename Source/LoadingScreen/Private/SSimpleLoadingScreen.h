@@ -17,12 +17,9 @@ public:
 
 	void Construct(const FArguments& InArgs, const FLoadingScreenDescription& ScreenDescription);
 
-	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
-
 private:
 	float GetDPIScale() const;
 	
 private:
 	TSharedPtr<FDeferredCleanupSlateBrush> LoadingScreenBrush;
-	float LastComputedDPIScale;
 };

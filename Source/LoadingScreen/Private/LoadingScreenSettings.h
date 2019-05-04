@@ -97,6 +97,6 @@ public:
 	float TipWrapAt;
 
 	/** The tips to display on the load screen. */
-	UPROPERTY(config, EditAnywhere, BlueprintReadWrite, Category=Advice)
+	UPROPERTY(config, EditAnywhere, BlueprintReadWrite, Category=Advice, meta = (MultiLine = "true"))
 	TArray<FText> Tips;
 };
